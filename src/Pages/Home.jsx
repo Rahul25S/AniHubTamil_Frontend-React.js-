@@ -5,7 +5,6 @@ import Popular from "../Components/Popular";
 const Home = () => {
   return (
     <>
-      <Hero />
       <Popular />
     </>
   );

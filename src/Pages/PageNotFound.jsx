@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import background from "../assets/background.png";
 
-const NotFound = () => {
+const NotFound = () => {  
   return (
     <div
       className="flex flex-col items-center justify-center min-h-screen text-center bg-gray-900 text-white px-4"

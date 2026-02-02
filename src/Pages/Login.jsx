@@ -1,82 +1,76 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
-import avatar from "../assets/profile.png";
-import { Toaster, toast } from "react-hot-toast";
-import { useFormik } from "formik";
-import { combinedValidate } from "./Helper/validate";
-import background from "../assets/background.png";
+import { Link } from "react-router-dom";
 
 const Login = () => {
-  const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
+  // Form states
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-  const formik = useFormik({
-    initialValues: {
-      email: "",
-      password: "",
-    },
-    validate: combinedValidate,
-    validateOnBlur: false,
-    validateOnChange: false,
-    onSubmit: async (values) => {
-      setLoading(true);
-      try {
-        const response = await axios.post("https://final-anihub-backend-1.onrender.com/api/login", values);
-        toast.success("Login Successful!");
+  // Message for user
+  const [message, setMessage] = useState("");
 
-        // Store user data in localStorage
-        localStorage.setItem("token", response.data.token);
-        localStorage.setItem("user", JSON.stringify(response.data.user));
+  const handleSubmit = (e) => {
+    e.preventDefault(); // stop page refresh
 
-        // Redirect to home page
-        navigate("/");
+    // Simple frontend validation
+    if (!email || !password) {
+      setMessage("Email and password are required");
+      return;
+    }
 
-        // Reload the page to update Navbar immediately
-        window.location.reload();  
-      } catch (error) {
-        toast.error(error.response?.data?.message || "Login failed");
-      } finally {
-        setLoading(false);
-      }
-    },
-  });
+    // Backend will be connected later
+    console.log("Login data:", {
+      email,
+      password,
+    });
+
+    setMessage("Login form submitted (frontend only)");
+
+    // Clear form
+    setEmail("");
+    setPassword("");
+  };
 
   return (
-    <div
-      className="flex flex-col items-center justify-center min-h-screen bg-gray-900 text-black"
-      style={{ backgroundImage: `url(${background})`, backgroundSize: "cover", backgroundRepeat: "no-repeat" }}
-    >
-      <Toaster position="top-center" reverseOrder={false} />
-      <div className="w-full max-w-md p-8 space-y-4 bg-white rounded shadow-md">
-        <h2 className="text-2xl font-bold text-center">Log In</h2>
-        <h2 className="text-center">Hello Again!</h2>
-        <div className="profile flex justify-center py-4">
-          <img className="border-4 border-gray-100 w-[135px] rounded-full shadow-lg cursor-pointer hover:border-gray-200" src={avatar} alt="User avatar" />
-        </div>
-        <form onSubmit={formik.handleSubmit} className="space-y-4">
+    <div className="min-h-screen flex items-center justify-center bg-gray-900">
+      <div className="w-full max-w-md bg-white p-6 rounded shadow">
+        <h2 className="text-2xl font-bold text-center mb-4">Log In</h2>
+
+        {message && (
+          <p className="text-center text-blue-600 mb-3">{message}</p>
+        )}
+
+        <form onSubmit={handleSubmit} className="space-y-4">
           <input
-            {...formik.getFieldProps("email")}
             type="email"
-            placeholder="Enter your Email"
-            className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="Email"
+            className="w-full px-3 py-2 border rounded"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
+
           <input
-            {...formik.getFieldProps("password")}
             type="password"
-            placeholder="Enter your password"
-            className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="Password"
+            className="w-full px-3 py-2 border rounded"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
           />
-          <button type="submit" className="w-full py-2 mt-2 text-white bg-green-500 rounded hover:bg-green-600" disabled={loading}>
-            {loading ? "Logging in..." : "Log In"}
+
+          <button
+            type="submit"
+            className="w-full py-2 bg-green-500 text-white rounded hover:bg-green-600"
+          >
+            Login
           </button>
         </form>
-        <div className="text-center py-4">
-          <span className="text-gray-700">New to Ani Hub Tamil? </span>
-          <Link to="/signup" className="py-2 mt-4 text-blue-700">
-            Register Now
+
+        <p className="text-center mt-4">
+          New user?{" "}
+          <Link to="/signup" className="text-blue-600 hover:underline">
+            Register here
           </Link>
-        </div>
+        </p>
       </div>
     </div>
   );

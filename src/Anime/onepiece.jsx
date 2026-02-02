@@ -1,11 +1,12 @@
 import React from "react";
 import PosterImage from "../assets/1.jpg";
+import Popular from "../Components/Popular";
 
 const onepiece = () => {
   return (
     <div className="flex flex-grow absolute w-full" style={{ top: "10%" }}>
-      <div className="max-w-6xl mx-auto p-2 md:p-6">
-        <div className="flex flex-row bg-gray-900 text-white rounded-lg overflow-hidden shadow-lg items-center gap-x-4">
+      <div className="mx-auto p-2 md:p-6">
+        <div className="max-w-6xl flex flex-row bg-gray-900 text-white rounded-lg overflow-hidden shadow-lg items-center gap-x-4">
           <div className="md:w-2/5 p-4 ">
             <h1 className="md:text-4xl text-2xl font-nsansHead font-bold md:mb-4">
               One Piece
@@ -33,7 +34,7 @@ const onepiece = () => {
           </div>
         </div>
 
-        <div className="bg-gray-800 text-white p-6 mt-4 rounded-lg shadow-lg">
+        <div className="max-w-6xl bg-gray-800 text-white p-6 mt-4 rounded-lg shadow-lg">
           <h2 className="text-xl font-semibold">Description</h2>
           <p className="text-gray-300 mt-2">
             Gold Roger was known as the "Pirate King," the strongest and most
