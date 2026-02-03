@@ -3,7 +3,7 @@ import { movieData } from "./MovieData";
 
 const Popular = () => {
   return (
-    <div className="p-4">
+    <div className="p-4 bg-gray-900 min-h-screen">
       <h1 className="font-nsansHead text-3xl mt-14 p-1 md:text-4xl md:p-4 text-white">
         POPULAR
       </h1>
@@ -11,8 +11,8 @@ const Popular = () => {
       <div className="grid gap-4 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
         {movieData.map((movie) => (
           <div
-            key={movie.id}
-            className="w-[200px] h-[380px] p-1 lg:w-[270px] lg:h-[450px] lg:p-2 bg-gray-800 rounded-md shadow-lg lg:hover:scale-105 lg:transition-transform lg:duration-300 cursor-pointer"
+            key={movie.redirectLink}
+            className="w-[200px] h-[380px] p-1 lg:w-[270px] lg:h-[450px] lg:p-2 bg-gray-800 rounded-md shadow-lg cursor-pointer"
             onClick={() => (window.location.href = movie.redirectLink)}
           >
             <img
@@ -36,7 +36,7 @@ const Popular = () => {
               </span>
             </div>
 
-            <h3 className="mt-2 text-xs lg:text-sm text-white">
+            <h3 className="mt-4 text-xs lg:text-sm text-white text-center">
               {movie.title}
             </h3>
           </div>

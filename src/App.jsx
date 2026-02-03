@@ -7,21 +7,10 @@ import Signup from "./Pages/Signup";
 import Profile from "./Pages/Profile";
 import PageNotFound from "./Pages/PageNotFound";
 
-// Anime Pages
-import Onepiece from "./Anime/onepiece";
-import Sololeveling from "./Anime/sololeveling";
-import SakamotoDays from "./Anime/Sakamoto Days";
-import BlueBox from "./Anime/Blue Box";
-import Dandadan from "./Anime/Dandadan";
-import WindBreaker from "./Anime/Wind Breaker";
-import Naruto from "./Anime/Naruto";
-import BlackClover from "./Anime/Black Clover";
-import ClassroomElite from "./Anime/Classroom of the Elite";
-import MyStar from "./Anime/My Star";
-
 // Components
 import Navbar from "./Components/Navbar";
 import Popular from "./Components/Popular";
+import AnimeDetail from "./Pages/AnimeDetails";
 
 const App = () => {
   return (
@@ -34,19 +23,17 @@ const App = () => {
         <Route path="/signup" element={<Signup />} />
         <Route path="/profile" element={<Profile />} />
 
-        {/* Anime pages */}
-        <Route path="/onepiece" element={<Onepiece />} />
-        <Route path="/sololeveling" element={<Sololeveling />} />
-        <Route path="/SakamotoDays" element={<SakamotoDays />} />
-        <Route path="/BlueBox" element={<BlueBox />} />
-        <Route path="/Dandadan" element={<Dandadan />} />
-        <Route path="/WindBreaker" element={<WindBreaker />} />
-        <Route path="/Naruto" element={<Naruto />} />
-        <Route path="/BlackClover" element={<BlackClover />} />
-        <Route path="/ClassroomoftheElite" element={<ClassroomElite />} />
-        <Route path="/MyStar" element={<MyStar />} />
+        <Route path="/onepiece" element={<AnimeDetail />} />
+        <Route path="/sololeveling" element={<AnimeDetail />} />
+        <Route path="/SakamotoDays" element={<AnimeDetail />} />
+        <Route path="/BlueBox" element={<AnimeDetail />} />
+        <Route path="/Dandadan" element={<AnimeDetail />} />
+        <Route path="/WindBreaker" element={<AnimeDetail />} />
+        <Route path="/Naruto" element={<AnimeDetail />} />
+        <Route path="/BlackClover" element={<AnimeDetail />} />
+        <Route path="/ClassroomoftheElite" element={<AnimeDetail />} />
+        <Route path="/MyStar" element={<AnimeDetail />} />
 
-        {/* Fallback */}
         <Route path="*" element={<PageNotFound />} />
       </Routes>
     </>

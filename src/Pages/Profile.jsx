@@ -1,33 +1,51 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 
 const Profile = () => {
-  // Temporary user data (later this will come from backend)
-  const [user] = useState({
-    username: "Guest User",
-    email: "guest@example.com",
-  });
+  const [user, setUser] = useState(null);
+  const [message, setMessage] = useState("");
+
+  // TEMP email (we will remove this later)
+  const email = "test@gmail.com";
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:8080/api/user/${email}`
+        );
+        setUser(response.data);
+      } catch (error) {
+        if (error.response) {
+          setMessage(error.response.data);
+        } else {
+          setMessage("Server not reachable");
+        }
+      }
+    };
+
+    fetchProfile();
+  }, []);
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-900">
-      <div className="w-full max-w-md bg-gray-600 p-6 rounded shadow text-center">
-        <h2 className="text-3xl font-bold mb-4">Profile</h2>
+      <div className="w-full max-w-md bg-white p-6 rounded shadow">
+        <h2 className="text-2xl font-bold text-center mb-4">Profile</h2>
 
-        <p className="text-lg mb-2">
-          <strong>Username:</strong> {user.username}
-        </p>
-
-        <p className="text-lg mb-4">
-          <strong>Email:</strong> {user.email}
-        </p>
-
-        {/* Logout button will work later with backend */}
-        <Link
-          to="/login"
-          className="inline-block mt-4 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
-        >
-          Logout
-        </Link>
+        {user ? (
+          <div className="space-y-2">
+            <p>
+              <strong>Email:</strong> {user.email}
+            </p>
+            <p>
+              <strong>Username:</strong> {user.username}
+            </p>
+          </div>
+        ) : (
+          <p className="text-center text-red-600">
+            {message || "Loading profile..."}
+          </p>
+        )}
       </div>
     </div>
   );
