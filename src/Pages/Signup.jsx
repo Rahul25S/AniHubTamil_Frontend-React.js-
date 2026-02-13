@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import background from "../assets/background.png";
 
 const Signup = () => {
+  const navigate = useNavigate();
+
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -12,31 +15,39 @@ const Signup = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post("http://localhost:8080/api/signup", {
+      await axios.post("http://localhost:8080/api/signup", {
         email,
         username,
         password,
       });
 
-      setMessage(response.data);
+      setMessage("Signup successful");
+
+      // go login
+      setTimeout(() => {
+        navigate("/login");
+      }, 1000);
+
     } catch (error) {
-      if (error.response) {
-        setMessage(error.response.data);
-      } else {
-        setMessage("Server not reachable");
-      }
+      setMessage("Signup failed");
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-900">
+    <div
+      className="min-h-screen flex items-center justify-center"
+      style={{
+        backgroundImage: `url(${background})`,
+        backgroundSize: "cover",
+        backgroundRepeat: "no-repeat",
+      }}
+    >
       <div className="w-full max-w-md bg-white p-6 rounded shadow">
         <h2 className="text-3xl font-bold text-center text-black mb-4">
           Sign Up
         </h2>
-        <h2 className="text-gray-700 text-center mb-3">Register</h2>
 
-        <form onSubmit={handleSignup} className="space-y-4">
+        <form onSubmit={handleSignup} className="space-y-4 text-black">
           <input
             type="email"
             placeholder="Email"
@@ -64,27 +75,20 @@ const Signup = () => {
             required
           />
 
-          <button
-            type="submit"
-            className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700"
-          >
+          <button className="w-full bg-blue-600 text-white py-2 rounded">
             Register
           </button>
         </form>
 
         {message && (
-          <p className="mt-4 text-center text-sm text-red-600">{message}</p>
+          <p className="mt-4 text-center text-red-600">{message}</p>
         )}
-        
-        <div className="flex items-center justify-between mt-4">
-          <p className="text-center text-black ">
-            Already have an account?{" "}
-          </p>
-          <p>
-            <Link to="/login" className="text-blue-600 hover:underline">
-              Login
-            </Link>
-          </p>
+
+        <div className="flex justify-between mt-4 text-black">
+          <p>Already have account?</p>
+          <Link to="/login" className="text-blue-600">
+            Login
+          </Link>
         </div>
       </div>
     </div>

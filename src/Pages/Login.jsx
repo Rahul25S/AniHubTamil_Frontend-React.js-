@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import background from "../assets/background.png";
 
 const Login = () => {
+  const navigate = useNavigate();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
@@ -16,27 +19,36 @@ const Login = () => {
         password,
       });
 
-      // success
+      // save user
+      localStorage.setItem("user", JSON.stringify(response.data));
+
       setMessage("Login successful");
-      console.log("Logged in user:", response.data);
+
+      // go profile
+      setTimeout(() => {
+        navigate("/profile");
+      }, 1000);
+
     } catch (error) {
-      if (error.response) {
-        setMessage(error.response.data);
-      } else {
-        setMessage("Server not reachable");
-      }
+      setMessage("Invalid credentials");
     }
   };
 
   return (
-    
-    <div className="min-h-screen flex items-center justify-center bg-gray-900">
+    <div
+      className="min-h-screen flex items-center justify-center"
+      style={{
+        backgroundImage: `url(${background})`,
+        backgroundSize: "cover",
+        backgroundRepeat: "no-repeat",
+      }}
+    >
       <div className="w-full max-w-md bg-white p-6 rounded shadow">
-        <h2 className="text-3xl font-bold text-center mb-4 text-black">
+        <h2 className="text-3xl font-bold text-center text-black mb-4">
           Login
         </h2>
-        <h2 className="text-black text-center mb-3">Hello Again!</h2>
-        <form onSubmit={handleLogin} className="space-y-4">
+
+        <form onSubmit={handleLogin} className="space-y-4 text-black">
           <input
             type="email"
             placeholder="Email"
@@ -55,24 +67,20 @@ const Login = () => {
             required
           />
 
-          <button
-            type="submit"
-            className="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700"
-          >
+          <button className="w-full bg-green-600 text-white py-2 rounded">
             Login
           </button>
         </form>
 
         {message && (
-          <p className="mt-4 text-center text-sm text-red-600">{message}</p>
+          <p className="mt-4 text-center text-red-600">{message}</p>
         )}
-        <div className="flex justify-between items-center mt-4">
-          <p className="text-black">New to AniHub Tamil?</p>
-          <p>
-            <Link to="/signup" className="text-blue-600 hover:underline">
-              Register here
-            </Link>
-          </p>
+
+        <div className="flex justify-between mt-4 text-black">
+          <p>New to AniHub Tamil?</p>
+          <Link to="/signup" className="text-blue-600">
+            Register
+          </Link>
         </div>
       </div>
     </div>

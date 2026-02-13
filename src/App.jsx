@@ -21,7 +21,7 @@ const App = () => {
         <Route path="/" element={<Popular />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
-        <Route path="/profile" element={<Profile />} />
+        <Route path="/profile" element={<Profile />}/>
 
         <Route path="/onepiece" element={<AnimeDetail />} />
         <Route path="/sololeveling" element={<AnimeDetail />} />

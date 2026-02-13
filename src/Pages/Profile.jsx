@@ -1,51 +1,29 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
-  const [user, setUser] = useState(null);
-  const [message, setMessage] = useState("");
+  const navigate = useNavigate();
+  const user = JSON.parse(localStorage.getItem("user"));
 
-  // TEMP email (we will remove this later)
-  const email = "test@gmail.com";
-
-  useEffect(() => {
-    const fetchProfile = async () => {
-      try {
-        const response = await axios.get(
-          `http://localhost:8080/api/user/${email}`
-        );
-        setUser(response.data);
-      } catch (error) {
-        if (error.response) {
-          setMessage(error.response.data);
-        } else {
-          setMessage("Server not reachable");
-        }
-      }
-    };
-
-    fetchProfile();
-  }, []);
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+    navigate("/signup");
+  };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-900">
-      <div className="w-full max-w-md bg-white p-6 rounded shadow">
-        <h2 className="text-2xl font-bold text-center mb-4">Profile</h2>
+    <div className="min-h-screen flex items-center justify-center bg-gray-900 text-white">
+      <div className="bg-gray-800 p-8 rounded text-center">
+        <h1 className="text-3xl font-bold mb-4">Profile</h1>
 
-        {user ? (
-          <div className="space-y-2">
-            <p>
-              <strong>Email:</strong> {user.email}
-            </p>
-            <p>
-              <strong>Username:</strong> {user.username}
-            </p>
-          </div>
-        ) : (
-          <p className="text-center text-red-600">
-            {message || "Loading profile..."}
-          </p>
-        )}
+        <p className="mb-2">Username: {user?.username}</p>
+        <p className="mb-4">Email: {user?.email}</p>
+
+        <button
+          onClick={handleLogout}
+          className="bg-red-600 px-4 py-2 rounded"
+        >
+          Logout
+        </button>
       </div>
     </div>
   );
