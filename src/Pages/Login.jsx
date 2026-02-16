@@ -19,18 +19,20 @@ const Login = () => {
         password,
       });
 
-      // save user
+      // 🔥 SAVE USER
       localStorage.setItem("user", JSON.stringify(response.data));
 
       setMessage("Login successful");
 
-      // go profile
       setTimeout(() => {
         navigate("/profile");
       }, 1000);
-
     } catch (error) {
-      setMessage("Invalid credentials");
+      if (error.response) {
+        setMessage(error.response.data);
+      } else {
+        setMessage("Server error");
+      }
     }
   };
 

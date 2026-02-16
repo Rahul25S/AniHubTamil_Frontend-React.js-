@@ -23,13 +23,15 @@ const Signup = () => {
 
       setMessage("Signup successful");
 
-      // go login
       setTimeout(() => {
         navigate("/login");
       }, 1000);
-
     } catch (error) {
-      setMessage("Signup failed");
+      if (error.response) {
+        setMessage(error.response.data);
+      } else {
+        setMessage("Server error");
+      }
     }
   };
 
